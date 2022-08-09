@@ -85,6 +85,13 @@ export async function translatePhrase(text: string, options: Options) {
   const page = await browser.newPage()
   page.setDefaultNavigationTimeout(60 * 1000) // 60 seconds
   page.setDefaultTimeout(61 * 1000) // 61 seconds
+  page.on('request', (request) => {
+    if (request.isNavigationRequest() && request.redirectChain().length !== 0) {
+      request.abort();
+    } else {
+      request.continue();
+    }
+  })
   const defaultDelay = options.defaultDelay || 150
   const targetLanguage = TargetLanguageMap[options.targetLanguage]
 
