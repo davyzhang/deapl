@@ -113,7 +113,7 @@ export async function translatePhrase(text: string, options: Options) {
     page.evaluate(() => document.body.innerHTML).then((html) => {
       fs.writeFileSync('/tmp/body.html', html)
     }).catch((err) => { console.log(err) })
-  }, 1000 * 30)
+  }, 1000 * 5)
   await page.waitForSelector('.lmt__language_select--target .lmt__language_select__active',
     queryWait)
 
