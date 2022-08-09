@@ -1,7 +1,8 @@
 /* eslint-disable no-await-in-loop */
+import * as fs from 'fs'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import PQueue from 'p-queue'
-import * as fs from 'fs'
+
 
 type SourceLanguage = 'bg' | 'zh' | 'cs' | 'da' | 'nl' | 'en' | 'et' | 'fi'
   | 'fr' | 'de' | 'el' | 'hu' | 'it' | 'ja' | 'lv' | 'lt' | 'pl' | 'pt'
@@ -47,7 +48,7 @@ let browserPromise: Promise<Browser> | undefined
 const getBrowser = () => {
   if (!browserPromise) {
     browserPromise = puppeteer.launch({
-      headless: true,
+      headless: false,
       args: [
         '--no-sandbox',
         // '--disable-setuid-sandbox',
@@ -59,8 +60,8 @@ const getBrowser = () => {
       ],
       // args: ['--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: {
-        width: 1200,
-        height: 800,
+        width: 1650,
+        height: 1050,
       },
     })
   }
@@ -83,6 +84,7 @@ export async function translatePhrase(text: string, options: Options) {
   }
   const browser = await getBrowser()
   const page = await browser.newPage()
+  await page.emulate(puppeteer.devices['iPad Pro'])
   page.setDefaultNavigationTimeout(60 * 1000) // 60 seconds
   page.setDefaultTimeout(61 * 1000) // 61 seconds
   // await page.setRequestInterception(true)
@@ -101,7 +103,7 @@ export async function translatePhrase(text: string, options: Options) {
     await page.waitForSelector('.lmt:not(.lmt--active_translation_request)', queryWait)
     await sleepMs(1000)
   }
-  await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36')
+
   await page.goto('https://www.deepl.com/en/translator')
   setTimeout(() => {
     page.screenshot({
