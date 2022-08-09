@@ -46,7 +46,16 @@ let browserPromise: Promise<Browser> | undefined
 const getBrowser = () => {
   if (!browserPromise) {
     browserPromise = puppeteer.launch({
-      // headless: false,
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+
+        '--disable-gpu',
+        // '--disable-dev-shm-usage',
+        '--no-first-run',
+        // '--no-zygote',
+      ],
       // args: ['--no-sandbox', '--disable-setuid-sandbox'],
       defaultViewport: {
         width: 800,
@@ -68,19 +77,25 @@ const hasSelector = (page: Page, selector: string) => page.evaluate(s =>
   !!document.querySelector(s), [selector])
 
 export async function translatePhrase(text: string, options: Options) {
+  const queryWait = {
+    timeout: 120 * 1000,
+  }
   const browser = await getBrowser()
   const page = await browser.newPage()
+  page.setDefaultNavigationTimeout(60 * 1000) // 60 seconds
+  page.setDefaultTimeout(61 * 1000) // 61 seconds
   const defaultDelay = options.defaultDelay || 150
   const targetLanguage = TargetLanguageMap[options.targetLanguage]
 
   const waitForTranslation = async () => {
     await sleepMs(1000)
-    await page.waitForSelector('.lmt:not(.lmt--active_translation_request)')
+    await page.waitForSelector('.lmt:not(.lmt--active_translation_request)', queryWait)
     await sleepMs(1000)
   }
   await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36')
   await page.goto('https://www.deepl.com/translator')
-  await page.waitForSelector('.lmt__language_select--target .lmt__language_select__active')
+  await page.waitForSelector('.lmt__language_select--target .lmt__language_select__active',
+    queryWait)
 
   while (await hasSelector(page, '.dl_cookieBanner--buttonSelected')) {
     await page.click('.dl_cookieBanner--buttonSelected')
@@ -121,11 +136,11 @@ export async function translatePhrase(text: string, options: Options) {
     await sleepMs(defaultDelay)
     if (options.formality === 'formal') {
       await page.click('.lmt__formalitySwitch__toggler')
-      await page.waitForSelector('.lmt__formalitySwitch__menu')
+      await page.waitForSelector('.lmt__formalitySwitch__menu', queryWait)
       await page.click('.lmt__formalitySwitch__menu_item_container:nth-child(1) .lmt__formalitySwitch__menu_item')
     } else if (options.formality === 'informal') {
       await page.click('.lmt__formalitySwitch__toggler')
-      await page.waitForSelector('.lmt__formalitySwitch__menu')
+      await page.waitForSelector('.lmt__formalitySwitch__menu', queryWait)
       await page.click('.lmt__formalitySwitch__menu_item_container:nth-child(2) .lmt__formalitySwitch__menu_item')
     }
 
@@ -138,6 +153,7 @@ export async function translatePhrase(text: string, options: Options) {
     return node.value
   })
   await page.close()
+  await browser.close()
   return result
 }
 

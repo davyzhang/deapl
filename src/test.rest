@@ -1,0 +1,7 @@
+POST http://localhost:9000/translate2/en-US
+Content-Type: application/json
+
+{
+    "text":"天苍苍野茫茫,风吹草低见牛羊",
+    "srcLang": "zh"
+}
