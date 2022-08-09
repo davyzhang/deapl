@@ -51,7 +51,7 @@ const getBrowser = () => {
       // executablePath: '/usr/bin/chromium',
       headless: true,
       args: [
-        // '--no-sandbox',
+        '--no-sandbox',
         // '--disable-setuid-sandbox',
 
         '--disable-gpu',
