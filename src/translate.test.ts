@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import test from 'ava'
-import translate, { kill } from './translate'
+import translate, { kill, setConcurrency, translatePhrase } from './translate'
 
 test('translate with auto language', async (t) => {
   const text = await translate('This is a test', {
