@@ -59,10 +59,10 @@ const getBrowser = () => {
         // '--no-zygote',
       ],
       // args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      defaultViewport: {
-        width: 1650,
-        height: 1050,
-      },
+      // defaultViewport: {
+      //   width: 1650,
+      //   height: 1050,
+      // },
     })
   }
   return browserPromise
@@ -186,5 +186,12 @@ export function setConcurrency(concurrency: number) {
 }
 
 export default async function translate(text: string, options: Options) {
-  return pQueue.add(() => translatePhrase(text, options))
+  return pQueue.add(() => {
+    try {
+      return translatePhrase(text, options)
+    } catch (err) {
+      console.log('err', err)
+      return Promise.resolve()
+    }
+  })
 }
