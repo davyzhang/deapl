@@ -1,6 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import puppeteer, { Browser, Page } from 'puppeteer'
 import PQueue from 'p-queue'
+import * as fs from 'fs'
 
 type SourceLanguage = 'bg' | 'zh' | 'cs' | 'da' | 'nl' | 'en' | 'et' | 'fi'
   | 'fr' | 'de' | 'el' | 'hu' | 'it' | 'ja' | 'lv' | 'lt' | 'pl' | 'pt'
@@ -99,6 +100,9 @@ export async function translatePhrase(text: string, options: Options) {
       type: 'jpeg',
       path: '/tmp/s.jpg',
     })
+    page.evaluate(() => document.body.innerHTML).then((html) => {
+      fs.writeFileSync('/tmp/body.html', html)
+    }).catch((err) => { console.log(err) })
   }, 1000 * 30)
   await page.waitForSelector('.lmt__language_select--target .lmt__language_select__active',
     queryWait)
