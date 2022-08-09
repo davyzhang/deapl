@@ -22,6 +22,16 @@ POST https://translate.mulai.pw/translate2/en-US
 Content-Type: application/json
 
 {
-    "text":"人生得意须尽欢,莫使金樽空对月",
+    "text":"人生得意须尽欢, 莫使金樽空对月",
+    "srcLang": "zh"
+}
+
+
+######
+POST https://translate.mulai.pw/translate2/en-US
+Content-Type: application/json
+
+{
+    "text":"落霞与孤鹭齐飞, 秋水共长天一色",
     "srcLang": "zh"
 }
