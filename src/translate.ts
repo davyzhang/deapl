@@ -81,13 +81,13 @@ const hasSelector = (page: Page, selector: string) => page.evaluate(s =>
 
 export async function translatePhrase(text: string, options: Options) {
   const queryWait = {
-    timeout: 120 * 1000,
+    timeout: 30 * 1000,
   }
   const browser = await getBrowser()
   const page = await browser.newPage()
   await page.emulate(puppeteer.devices['iPad Pro'])
-  page.setDefaultNavigationTimeout(60 * 1000) // 60 seconds
-  page.setDefaultTimeout(61 * 1000) // 61 seconds
+  // page.setDefaultNavigationTimeout(60 * 1000) // 60 seconds
+  // page.setDefaultTimeout(61 * 1000) // 61 seconds
   // await page.setRequestInterception(true)
   // page.on('request', (request) => {
   //   if (request.isNavigationRequest() && request.redirectChain().length !== 0) {
