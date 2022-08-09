@@ -48,6 +48,7 @@ let browserPromise: Promise<Browser> | undefined
 const getBrowser = () => {
   if (!browserPromise) {
     browserPromise = puppeteer.launch({
+      executablePath: '/usr/bin/chromium',
       headless: true,
       args: [
         '--no-sandbox',
