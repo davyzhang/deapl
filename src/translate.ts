@@ -105,15 +105,15 @@ export async function translatePhrase(text: string, options: Options) {
   }
 
   await page.goto('https://www.deepl.com/en/translator')
-  setTimeout(() => {
-    page.screenshot({
-      type: 'jpeg',
-      path: '/tmp/s.jpg',
-    })
-    page.evaluate(() => document.body.innerHTML).then((html) => {
-      fs.writeFileSync('/tmp/body.html', html)
-    }).catch((err) => { console.log(err) })
-  }, 1000 * 5)
+  // setTimeout(() => {
+  //   page.screenshot({
+  //     type: 'jpeg',
+  //     path: '/tmp/s.jpg',
+  //   })
+  //   page.evaluate(() => document.body.innerHTML).then((html) => {
+  //     fs.writeFileSync('/tmp/body.html', html)
+  //   }).catch((err) => { console.log(err) })
+  // }, 1000 * 5)
   await page.waitForSelector('.lmt__language_select--target .lmt__language_select__active',
     queryWait)
 
@@ -173,7 +173,6 @@ export async function translatePhrase(text: string, options: Options) {
     return node.value
   })
   await page.close()
-  await browser.close()
   return result
 }
 

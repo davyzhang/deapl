@@ -12,6 +12,16 @@ POST https://translate.mulai.pw/translate2/en-US
 Content-Type: application/json
 
 {
-    "text":"天苍苍野茫茫,风吹草低见牛羊",
+    "text":"对酒当歌人生几何",
+    "srcLang": "zh"
+}
+
+
+######
+POST https://translate.mulai.pw/translate2/en-US
+Content-Type: application/json
+
+{
+    "text":"人生得意须尽欢",
     "srcLang": "zh"
 }
