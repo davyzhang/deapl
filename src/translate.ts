@@ -48,12 +48,12 @@ let browserPromise: Promise<Browser> | undefined
 const getBrowser = () => {
   if (!browserPromise) {
     browserPromise = puppeteer.launch({
-      headless: false,
+      headless: true,
       args: [
         '--no-sandbox',
         // '--disable-setuid-sandbox',
 
-        // '--disable-gpu',
+        '--disable-gpu',
         // '--disable-dev-shm-usage',
         '--no-first-run',
         // '--no-zygote',
