@@ -5,3 +5,13 @@ Content-Type: application/json
     "text":"天苍苍野茫茫,风吹草低见牛羊",
     "srcLang": "zh"
 }
+
+
+######
+POST https://translate.mulai.pw/translate2/en-US
+Content-Type: application/json
+
+{
+    "text":"天苍苍野茫茫,风吹草低见牛羊",
+    "srcLang": "zh"
+}
