@@ -11,7 +11,6 @@ RUN echo 'kernel.unprivileged_userns_clone=1' > /etc/sysctl.d/userns.conf
 USER puppeteer
 
 ADD ./src .
-ADD ./dist .
 ADD ./package.json .
 
 RUN npm install 
