@@ -22,6 +22,6 @@ POST https://translate.mulai.pw/translate2/en-US
 Content-Type: application/json
 
 {
-    "text":"人生得意须尽欢",
+    "text":"人生得意须尽欢,莫使金樽空对月",
     "srcLang": "zh"
 }
