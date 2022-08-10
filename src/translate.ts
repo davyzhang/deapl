@@ -3,10 +3,9 @@ import * as fs from 'fs'
 import puppeteer, { Browser, Page } from 'puppeteer'
 import PQueue from 'p-queue'
 
-
 type SourceLanguage = 'bg' | 'zh' | 'cs' | 'da' | 'nl' | 'en' | 'et' | 'fi'
   | 'fr' | 'de' | 'el' | 'hu' | 'it' | 'ja' | 'lv' | 'lt' | 'pl' | 'pt'
-  | 'ro' | 'ru' | 'sk' | 'sl' | 'es' | 'sv'
+  | 'ro' | 'ru' | 'sk' | 'sl' | 'es' | 'sv' | 'id'
 const TargetLanguageMap = {
   'bg-BG': 'bg',
   'zh-CN': 'zh',
@@ -97,7 +96,7 @@ export async function translatePhrase(text: string, options: Options) {
   //   }
   // })
   const defaultDelay = options.defaultDelay || 150
-  const targetLanguage = TargetLanguageMap[options.targetLanguage]
+  const targetLanguage = TargetLanguageMap[options.targetLanguage] || options.targetLanguage
 
   const waitForTranslation = async () => {
     await sleepMs(1000)

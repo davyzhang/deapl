@@ -6,6 +6,26 @@ Content-Type: application/json
     "srcLang": "zh"
 }
 
+######
+POST http://localhost:9000/translate2/en-US
+Content-Type: application/json
+
+{
+    "text":"一骑红尘妃子笑,无人知是荔枝来",
+    "srcLang": "zh"
+}
+
+######
+POST http://localhost:9000/translate2/id
+Content-Type: application/json
+
+{
+    "text":"hello world",
+    "srcLang": "en"
+}
+
+
+
 
 ######
 POST https://translate.mulai.pw/translate2/en-US
@@ -34,4 +54,14 @@ Content-Type: application/json
 {
     "text":"落霞与孤鹭齐飞, 秋水共长天一色",
     "srcLang": "zh"
+}
+
+
+######
+POST https://translate.mulai.pw/translate2/da-DK
+Content-Type: application/json
+
+{
+    "text":"You lie",
+    "srcLang": "en"
 }
